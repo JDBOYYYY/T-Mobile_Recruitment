@@ -15,22 +15,11 @@ pipeline {
         stage('Verify Tools') {
             steps {
                 script {
-                    // Check Java version
-                    sh 'echo "JAVA_HOME=$JAVA_HOME"'
+                    // Check tool versions (minimal logging)
                     sh 'java -version'
-                    sh 'javac -version'
-
-                    // Check Maven version
                     sh 'mvn -version'
-
-                    // Check Chrome version
                     sh 'google-chrome --version'
-
-                    // Check ChromeDriver version
                     sh 'chromedriver --version'
-
-                    // Check Selenium version
-                    sh 'mvn dependency:tree | grep selenium'
                 }
             }
         }
@@ -44,6 +33,16 @@ pipeline {
                     sh 'mvn test'
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            // Archive the test results and generate a report
+            junit '**/target/surefire-reports/*.xml'
+
+            // Archive any other relevant artifacts (e.g., logs, screenshots)
+            archiveArtifacts artifacts: '**/target/**', allowEmptyArchive: true
         }
     }
 }
