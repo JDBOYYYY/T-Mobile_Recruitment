@@ -23,12 +23,12 @@ pipeline {
                        # Download and extract Maven
                        curl -L -o maven.tar.gz $MAVEN_URL
 
+                       # Check if the downloaded file is a valid gzip file and extract it
                        if file maven.tar.gz | grep -q 'gzip compressed data'; then
                            tar -xzf maven.tar.gz -C $MAVEN_HOME --strip-components=1
                            echo "Maven downloaded and extracted successfully"
                        else
                            echo "Downloaded file is not a valid gzip file"
-                           cat maven.tar.gz
                            exit 1
                        fi
 
