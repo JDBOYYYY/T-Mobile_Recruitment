@@ -36,7 +36,8 @@ public class TMobileSteps {
         homePage.openHomePage(url);
         logger.info("Opened URL: {}", url);
         assertTrue(homePage.isMainPageDisplayed(), "Main page should be displayed");
-        homePage.acceptCookies();
+        // accept Cookies only on headed mode
+//        homePage.acceptCookies();
     }
 
     @And("Z górnej belki wybierz Urządzenia")
