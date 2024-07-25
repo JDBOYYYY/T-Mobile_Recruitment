@@ -28,6 +28,7 @@ public class TMobileSteps {
         logger.info("Otwieranie przeglądarki");
         System.setProperty("selenide.browser", "Chrome");
         Configuration.browserSize = "1920x1080";
+        Configuration.headless =true;
     }
 
     @When("Przejdź na stronę {string}")
@@ -35,7 +36,7 @@ public class TMobileSteps {
         homePage.openHomePage(url);
         logger.info("Opened URL: {}", url);
         assertTrue(homePage.isMainPageDisplayed(), "Main page should be displayed");
-        homePage.acceptCookies();
+//        homePage.acceptCookies();
     }
 
     @And("Z górnej belki wybierz Urządzenia")
