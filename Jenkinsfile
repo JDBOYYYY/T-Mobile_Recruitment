@@ -15,25 +15,33 @@ pipeline {
         stage('Verify Tools') {
             steps {
                 script {
-                    // Print JAVA_HOME to verify it's correctly set
-                    sh 'echo JAVA_HOME=$JAVA_HOME'
-
-                    // Print Java version to verify the correct JDK is being used
+                    // Check Java version
+                    sh 'echo "JAVA_HOME=$JAVA_HOME"'
                     sh 'java -version'
-
-                    // Print Java compiler version to verify the correct JDK is being used
                     sh 'javac -version'
 
-                    // Print Maven version to verify Maven is correctly set
+                    // Check Maven version
                     sh 'mvn -version'
+
+                    // Check Chrome version
+                    sh 'google-chrome --version'
+
+                    // Check ChromeDriver version
+                    sh 'chromedriver --version'
+
+                    // Check Selenium version
+                    sh 'mvn dependency:tree | grep selenium'
                 }
             }
         }
-        stage('Build') {
+        stage('Build and Test') {
             steps {
                 script {
-                    // Running Maven build command
+                    // Clean and install the project
                     sh 'mvn clean install'
+
+                    // Run tests
+                    sh 'mvn test'
                 }
             }
         }
