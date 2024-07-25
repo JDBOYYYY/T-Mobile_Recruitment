@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: always
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      JENKINS_OPTS: --prefix=/jenkins
+    networks:
+      - jenkins_network
+
+  backup:
+    image: alpine
+    container_name: jenkins_backup
+    volumes:
+      - jenkins_home:/volume
+      - ./backups:/backup
+    entrypoint: >
+      sh -c "apk add --no-cache bash && 
+             echo '0 2 * * * tar czf /backup/jenkins_home_backup_$(date +%F_%T).tar.gz -C /volume . ' | crontab - && 
+             crond -f -d 8"
+
+volumes:
+  jenkins_home:
+
+networks:
+  jenkins_network:
+    driver: bridge
