@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     tools {
+        jdk 'jdk-21'
         maven 'Maven' // This should match the name you have configured for Maven
     }
 
