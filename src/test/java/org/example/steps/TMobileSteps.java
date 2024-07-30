@@ -38,7 +38,7 @@ public class TMobileSteps {
         assertTrue(homePage.isMainPageDisplayed(), "Main page should be displayed");
         // accept Cookies only on headed mode
         //
-        homePage.acceptCookies();
+//        homePage.acceptCookies();
     }
 
     @And("Z górnej belki wybierz Urządzenia")
