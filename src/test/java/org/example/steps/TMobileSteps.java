@@ -28,7 +28,7 @@ public class TMobileSteps {
         logger.info("Otwieranie przeglądarki");
         System.setProperty("selenide.browser", "Chrome");
         Configuration.browserSize = "1920x1080";
-        Configuration.headless =false;
+        Configuration.headless =true;
     }
 
     @When("Przejdź na stronę {string}")
